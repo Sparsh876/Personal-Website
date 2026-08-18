@@ -422,61 +422,32 @@
     .skill-item:hover .skill-dot { box-shadow: 0 0 6px var(--accent); }
 
     /* ─── PROJECTS ─── */
-    #projects .coming-soon-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 0 2rem;
+    #projects .projects-wrapper {
+      padding: 2rem 0 0;
     }
 
-    .cs-icon {
-      width: 72px; height: 72px;
-      border: 1px solid var(--rule);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 2rem;
-      position: relative;
-      box-shadow: 0 0 24px var(--accent-glow);
-    }
-
-    .cs-icon::after {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 10px var(--accent);
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50%       { transform: scale(2.2); opacity: 0.35; }
-    }
-
-    .cs-headline {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 3vw, 3rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--cream);
+    .projects-intro {
+      font-size: 13px;
+      color: var(--cream-muted);
+      line-height: 1.9;
+      max-width: 52ch;
       margin-bottom: 1rem;
     }
 
-    .cs-subtext {
-      font-size: 13px;
-      color: var(--cream-muted);
-      max-width: 400px;
-      line-height: 1.8;
+    .projects-intro a {
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.2s, border-color 0.2s;
     }
+
+    .projects-intro a:hover { color: var(--accent); border-color: var(--accent); }
 
     .cs-placeholder-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      margin-top: 4rem;
+      margin-top: 2.5rem;
       width: 100%;
     }
 
@@ -486,7 +457,7 @@
       cursor: pointer;
       border: 1px solid var(--rule);
       background: var(--bg-card);
-      height: 220px;
+      min-height: 240px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -538,6 +509,25 @@
       width: fit-content;
       border: 1px solid var(--rule);
     }
+
+    .placeholder-cue {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+      transition: color 0.3s;
+    }
+
+    .placeholder-arrow {
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .placeholder-card:hover .placeholder-cue { color: var(--accent); }
+    .placeholder-card:hover .placeholder-arrow { transform: translateX(4px); }
 
     .placeholder-name {
       font-family: var(--serif);
@@ -913,25 +903,27 @@
       <h2 class="section-title">Projects</h2>
       <div class="section-rule"></div>
     </div>
-    <div class="coming-soon-wrapper">
-      <div class="cs-icon reveal"></div>
-      <h3 class="cs-headline reveal reveal-delay-1">Work in progress</h3>
-      <p class="cs-subtext reveal reveal-delay-2">
-        I'm building things worth sharing. Check back soon — or reach out
-        if you'd like to know what I'm working on right now.
+    <div class="projects-wrapper">
+      <p class="projects-intro reveal">
+        Three things I'm building right now. The write-ups are still going
+        up — open one to see where it stands, or
+        <a href="#contact">ask me directly</a> what I'm working on.
       </p>
       <div class="cs-placeholder-grid">
         <a href="projects/project-01.html" class="placeholder-card reveal reveal-delay-1" data-n="01">
-          <span class="placeholder-tag">Coming soon</span>
+          <span class="placeholder-tag">Write-up in progress</span>
           <p class="placeholder-name">Project name here</p>
+          <span class="placeholder-cue">View <span class="placeholder-arrow">→</span></span>
         </a>
         <a href="projects/project-02.html" class="placeholder-card reveal reveal-delay-2" data-n="02">
-          <span class="placeholder-tag">Coming soon</span>
+          <span class="placeholder-tag">Write-up in progress</span>
           <p class="placeholder-name">Project name here</p>
+          <span class="placeholder-cue">View <span class="placeholder-arrow">→</span></span>
         </a>
         <a href="projects/project-03.html" class="placeholder-card reveal reveal-delay-3" data-n="03">
-          <span class="placeholder-tag">Coming soon</span>
+          <span class="placeholder-tag">Write-up in progress</span>
           <p class="placeholder-name">Project name here</p>
+          <span class="placeholder-cue">View <span class="placeholder-arrow">→</span></span>
         </a>
       </div>
     </div>
