@@ -603,51 +603,94 @@
 
     .contact-link:hover .contact-link-label { color: var(--accent); }
 
-    .contact-form-area {
-      padding: 2.5rem;
+    .contact-card {
+      padding: 3rem 2.5rem;
       border: 1px solid var(--rule);
       background: var(--bg-card);
+      position: relative;
+      overflow: hidden;
     }
 
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+    .contact-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(233,161,120,0.06), transparent 60%);
+      pointer-events: none;
+    }
+
+    .contact-card-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
       margin-bottom: 1.5rem;
     }
 
-    .form-label {
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    .contact-card-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .contact-card-heading em { font-style: italic; color: var(--accent); }
+
+    .contact-card-text {
+      font-size: 13px;
+      color: var(--cream-muted);
+      line-height: 1.8;
+      margin-bottom: 2.25rem;
+      max-width: 34ch;
+    }
+
+    .contact-card-address {
+      display: block;
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.5vw, 15px);
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      text-decoration: none;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.25s, border-color 0.25s;
+      word-break: break-all;
+    }
+
+    .contact-card-address:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .contact-card-btn { width: 100%; }
+
+    .contact-card-alt {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+      font-size: 11px;
       color: var(--cream-faint);
     }
 
-    .form-input, .form-textarea {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--rule);
-      padding: 0.6rem 0;
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--cream);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      width: 100%;
+    .contact-card-alt a {
+      color: var(--cream-muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    .form-textarea { resize: vertical; min-height: 80px; }
-
-    .form-input:focus, .form-textarea:focus {
+    .contact-card-alt a:hover {
+      color: var(--accent);
       border-color: var(--accent);
-      box-shadow: 0 2px 0 rgba(233,161,120,0.35);
     }
 
-    .form-input::placeholder,
-    .form-textarea::placeholder { color: var(--cream-faint); }
-
-    .form-submit { width: 100%; margin-top: 0.5rem; }
+    .contact-card-sep { color: var(--cream-faint); }
 
     /* ─── FOOTER ─── */
     footer {
@@ -928,20 +971,25 @@
         </div>
       </div>
       <div class="reveal reveal-delay-2">
-        <div class="contact-form-area">
-          <div class="form-row">
-            <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Ada Lovelace" />
+        <div class="contact-card">
+          <span class="contact-card-label">// Direct</span>
+          <h4 class="contact-card-heading">Drop me a <em>line.</em></h4>
+          <p class="contact-card-text">
+            No forms, no funnels. Write to me directly and it lands
+            straight in my inbox.
+          </p>
+          <a class="contact-card-address" href="mailto:sparshkumar1511@gmail.com">
+            sparshkumar1511@gmail.com
+          </a>
+          <a class="btn btn-primary contact-card-btn" href="mailto:sparshkumar1511@gmail.com">
+            Compose an email
+          </a>
+          <div class="contact-card-alt">
+            <span>Prefer something else?</span>
+            <a href="https://www.linkedin.com/in/sparsh-kumar-440364297" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="contact-card-sep">/</span>
+            <a href="https://github.com/Sparsh876" target="_blank" rel="noopener">GitHub</a>
           </div>
-          <div class="form-row">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="ada@company.com" />
-          </div>
-          <div class="form-row">
-            <label class="form-label">Message</label>
-            <textarea class="form-textarea" placeholder="What's on your mind?"></textarea>
-          </div>
-          <a class="btn btn-primary form-submit" href="mailto:sparshkumar1511@gmail.com">Send message</a>
         </div>
       </div>
     </div>
