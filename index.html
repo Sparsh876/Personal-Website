@@ -11,16 +11,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #0A0714;
-      --bg-card:      #110D20;
-      --purple:       #C4AAFF;
-      --purple-mid:   #9B6DFF;
-      --purple-dim:   rgba(196, 170, 255, 0.1);
-      --purple-glow:  rgba(196, 170, 255, 0.28);
-      --cream:        #F0E8D8;
-      --cream-muted:  #A89880;
-      --cream-faint:  #5C4F42;
-      --rule:         rgba(155, 109, 255, 0.18);
+      --bg:           #0B0A09;
+      --bg-card:      #16130F;
+      --accent:       #E9A178;
+      --accent-mid:   #C2693C;
+      --accent-dim:   rgba(233, 161, 120, 0.10);
+      --accent-glow:  rgba(233, 161, 120, 0.28);
+      --cream:        #F2EAE0;
+      --cream-muted:  #A89583;
+      --cream-faint:  #5E5044;
+      --rule:         rgba(194, 105, 60, 0.20);
       --mono:   'IBM Plex Mono', monospace;
       --serif:  'Cormorant Garamond', Georgia, serif;
     }
@@ -29,6 +29,8 @@
 
     body {
       background: var(--bg);
+      background-image: linear-gradient(170deg, #08080A 0%, #191A1E 45%, #0E0D0C 100%);
+      background-attachment: fixed;
       color: var(--cream);
       font-family: var(--mono);
       font-weight: 300;
@@ -56,7 +58,7 @@
     .orb-1 {
       width: 650px;
       height: 650px;
-      background: radial-gradient(circle, rgba(130,80,220,0.55), transparent 70%);
+      background: radial-gradient(circle, rgba(190,92,42,0.24), transparent 70%);
       top: -120px;
       left: -180px;
     }
@@ -64,7 +66,7 @@
     .orb-2 {
       width: 520px;
       height: 520px;
-      background: radial-gradient(circle, rgba(80,45,160,0.5), transparent 70%);
+      background: radial-gradient(circle, rgba(122,62,32,0.20), transparent 70%);
       top: 55vh;
       right: -120px;
     }
@@ -72,7 +74,7 @@
     .orb-3 {
       width: 420px;
       height: 420px;
-      background: radial-gradient(circle, rgba(196,170,255,0.2), transparent 70%);
+      background: radial-gradient(circle, rgba(233,161,120,0.10), transparent 70%);
       bottom: 5vh;
       left: 35%;
     }
@@ -88,7 +90,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 3rem;
-      background: rgba(10, 7, 20, 0.65);
+      background: rgba(11, 10, 9, 0.70);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--rule);
@@ -105,7 +107,7 @@
       text-decoration: none;
     }
 
-    .nav-logo span { color: var(--purple); }
+    .nav-logo span { color: var(--accent); }
 
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 
@@ -126,12 +128,12 @@
       position: absolute;
       bottom: -4px; left: 0;
       width: 0; height: 1px;
-      background: var(--purple);
+      background: var(--accent);
       transition: width 0.3s;
     }
 
     .nav-links a:hover,
-    .nav-links a.active { color: var(--purple); }
+    .nav-links a.active { color: var(--accent); }
 
     .nav-links a:hover::after,
     .nav-links a.active::after { width: 100%; }
@@ -158,7 +160,7 @@
       font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--purple);
+      color: var(--accent);
       margin-bottom: 1.5rem;
     }
 
@@ -172,7 +174,7 @@
       color: var(--cream);
     }
 
-    .hero-name em { font-style: italic; color: var(--purple); }
+    .hero-name em { font-style: italic; color: var(--accent); }
 
     .hero-title {
       font-family: var(--serif);
@@ -211,14 +213,14 @@
     .btn:hover { transform: translateY(-2px); }
 
     .btn-primary {
-      background: var(--purple);
+      background: var(--accent);
       color: var(--bg);
-      border-color: var(--purple);
+      border-color: var(--accent);
     }
     .btn-primary:hover {
       background: transparent;
-      color: var(--purple);
-      box-shadow: 0 0 24px var(--purple-glow);
+      color: var(--accent);
+      box-shadow: 0 0 24px var(--accent-glow);
     }
 
     .btn-ghost {
@@ -227,9 +229,9 @@
       border-color: var(--rule);
     }
     .btn-ghost:hover {
-      border-color: var(--purple);
-      color: var(--purple);
-      box-shadow: 0 0 24px var(--purple-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 24px var(--accent-glow);
     }
 
     .hero-right {
@@ -243,7 +245,7 @@
     .hero-aside { display: flex; flex-direction: column; gap: 2.5rem; }
 
     .aside-block {
-      border-left: 2px solid var(--purple);
+      border-left: 2px solid var(--accent);
       padding-left: 1.25rem;
     }
 
@@ -264,7 +266,7 @@
       font-size: clamp(6rem, 12vw, 12rem);
       font-weight: 300;
       font-style: italic;
-      color: rgba(155, 109, 255, 0.07);
+      color: rgba(194, 105, 60, 0.09);
       line-height: 1;
       user-select: none;
       pointer-events: none;
@@ -304,7 +306,7 @@
       font-family: var(--mono);
       font-size: 11px;
       letter-spacing: 0.2em;
-      color: var(--purple);
+      color: var(--accent);
     }
 
     .section-title {
@@ -358,7 +360,7 @@
 
     .meta-value { font-size: 14px; color: var(--cream); }
 
-    .meta-value a { color: var(--purple); text-decoration: none; }
+    .meta-value a { color: var(--accent); text-decoration: none; }
     .meta-value a:hover { text-decoration: underline; }
 
     /* ─── SKILLS ─── */
@@ -375,7 +377,7 @@
       border-radius: 2px;
     }
 
-    .skill-category:hover { background: var(--purple-dim); }
+    .skill-category:hover { background: var(--accent-dim); }
 
     .skill-category:last-child {
       border-right: none;
@@ -391,7 +393,7 @@
       font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--purple);
+      color: var(--accent);
       margin-bottom: 1.5rem;
     }
 
@@ -407,17 +409,17 @@
       cursor: default;
     }
 
-    .skill-item:hover { color: var(--purple); transform: translateX(5px); }
+    .skill-item:hover { color: var(--accent); transform: translateX(5px); }
 
     .skill-dot {
       width: 4px; height: 4px;
       border-radius: 50%;
-      background: var(--purple);
+      background: var(--accent);
       flex-shrink: 0;
       transition: box-shadow 0.2s;
     }
 
-    .skill-item:hover .skill-dot { box-shadow: 0 0 6px var(--purple); }
+    .skill-item:hover .skill-dot { box-shadow: 0 0 6px var(--accent); }
 
     /* ─── PROJECTS ─── */
     #projects .coming-soon-wrapper {
@@ -437,16 +439,16 @@
       justify-content: center;
       margin-bottom: 2rem;
       position: relative;
-      box-shadow: 0 0 24px var(--purple-glow);
+      box-shadow: 0 0 24px var(--accent-glow);
     }
 
     .cs-icon::after {
       content: '';
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--purple);
+      background: var(--accent);
       animation: pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 10px var(--purple);
+      box-shadow: 0 0 10px var(--accent);
     }
 
     @keyframes pulse {
@@ -479,6 +481,9 @@
     }
 
     .placeholder-card {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
       border: 1px solid var(--rule);
       background: var(--bg-card);
       height: 220px;
@@ -506,14 +511,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(196,170,255,0.07), transparent 60%);
+      background: linear-gradient(135deg, rgba(233,161,120,0.07), transparent 60%);
       opacity: 0;
       transition: opacity 0.3s;
     }
 
     .placeholder-card:hover {
-      border-color: var(--purple);
-      box-shadow: 0 0 32px rgba(196,170,255,0.18);
+      border-color: var(--accent);
+      box-shadow: 0 0 32px rgba(233,161,120,0.18);
       transform: translateY(-5px);
     }
 
@@ -526,8 +531,8 @@
       font-weight: 400;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: var(--purple-dim);
-      color: var(--purple);
+      background: var(--accent-dim);
+      color: var(--accent);
       padding: 0.25rem 0.6rem;
       margin-bottom: 0.6rem;
       width: fit-content;
@@ -559,7 +564,7 @@
       color: var(--cream);
     }
 
-    .contact-heading em { font-style: italic; color: var(--purple); }
+    .contact-heading em { font-style: italic; color: var(--accent); }
 
     .contact-text {
       font-size: 13px;
@@ -585,7 +590,7 @@
 
     .contact-link:last-child { border-bottom: none; padding-bottom: 0; }
 
-    .contact-link:hover { color: var(--purple); padding-left: 8px; }
+    .contact-link:hover { color: var(--accent); padding-left: 8px; }
 
     .contact-link-label {
       font-size: 10px;
@@ -596,7 +601,7 @@
       transition: color 0.2s;
     }
 
-    .contact-link:hover .contact-link-label { color: var(--purple); }
+    .contact-link:hover .contact-link-label { color: var(--accent); }
 
     .contact-form-area {
       padding: 2.5rem;
@@ -635,8 +640,8 @@
     .form-textarea { resize: vertical; min-height: 80px; }
 
     .form-input:focus, .form-textarea:focus {
-      border-color: var(--purple);
-      box-shadow: 0 2px 0 rgba(196,170,255,0.35);
+      border-color: var(--accent);
+      box-shadow: 0 2px 0 rgba(233,161,120,0.35);
     }
 
     .form-input::placeholder,
@@ -669,7 +674,7 @@
       transition: color 0.2s;
     }
 
-    .footer-back:hover { color: var(--purple); }
+    .footer-back:hover { color: var(--accent); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
@@ -723,7 +728,7 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#hero">YN<span>.</span></a>
+    <a class="nav-logo" href="#hero">SK<span>.</span></a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -795,7 +800,7 @@
       <div class="about-meta reveal reveal-delay-2">
         <div class="meta-item">
           <p class="meta-label">Email</p>
-          <p class="meta-value"><a href="mailto:sparshkumar1511@email.com">sparshkumar1511@email.com</a></p>
+          <p class="meta-value"><a href="mailto:sparshkumar1511@gmail.com">sparshkumar1511@gmail.com</a></p>
         </div>
         <div class="meta-item">
           <p class="meta-label">GitHub</p>
@@ -873,18 +878,18 @@
         if you'd like to know what I'm working on right now.
       </p>
       <div class="cs-placeholder-grid">
-        <div class="placeholder-card reveal reveal-delay-1" data-n="01">
+        <a href="projects/project-01.html" class="placeholder-card reveal reveal-delay-1" data-n="01">
           <span class="placeholder-tag">Coming soon</span>
           <p class="placeholder-name">Project name here</p>
-        </div>
-        <div class="placeholder-card reveal reveal-delay-2" data-n="02">
+        </a>
+        <a href="projects/project-02.html" class="placeholder-card reveal reveal-delay-2" data-n="02">
           <span class="placeholder-tag">Coming soon</span>
           <p class="placeholder-name">Project name here</p>
-        </div>
-        <div class="placeholder-card reveal reveal-delay-3" data-n="03">
+        </a>
+        <a href="projects/project-03.html" class="placeholder-card reveal reveal-delay-3" data-n="03">
           <span class="placeholder-tag">Coming soon</span>
           <p class="placeholder-name">Project name here</p>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -904,9 +909,9 @@
           on, or just want to connect — my inbox is open.
         </p>
         <div class="contact-links">
-          <a class="contact-link" href="mailto:sparshkumar1511@email.com">
+          <a class="contact-link" href="mailto:sparshkumar1511@gmail.com">
             <span class="contact-link-label">Email</span>
-            sparshkumar1511@email.com
+            sparshkumar1511@gmail.com
           </a>
           <a class="contact-link" href="https://github.com/Sparsh876" target="_blank" rel="noopener">
             <span class="contact-link-label">GitHub</span>
@@ -936,7 +941,7 @@
             <label class="form-label">Message</label>
             <textarea class="form-textarea" placeholder="What's on your mind?"></textarea>
           </div>
-          <a class="btn btn-primary form-submit" href="mailto:you@email.com">Send message</a>
+          <a class="btn btn-primary form-submit" href="mailto:sparshkumar1511@gmail.com">Send message</a>
         </div>
       </div>
     </div>
