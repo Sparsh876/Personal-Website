@@ -366,26 +366,29 @@
     /* ─── SKILLS ─── */
     #skills .skills-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 0;
+      align-items: start;
     }
 
     .skill-category {
-      padding: 2.5rem 2.5rem 2.5rem 0;
-      border-right: 1px solid var(--rule);
+      padding: 2.5rem;
+      border-top: 1px solid var(--rule);
       transition: background 0.3s;
       border-radius: 2px;
     }
 
     .skill-category:hover { background: var(--accent-dim); }
 
-    .skill-category:last-child {
-      border-right: none;
+    /* left column sits flush with the section edge */
+    .skill-category:nth-child(odd) { padding-left: 0; }
+    /* centre rule between the two columns */
+    .skill-category:nth-child(even) {
+      border-left: 1px solid var(--rule);
       padding-right: 0;
-      padding-left: 2.5rem;
     }
-
-    .skill-category:nth-child(2) { padding-left: 2.5rem; }
+    /* no rule above the first row */
+    .skill-category:nth-child(-n+2) { border-top: none; padding-top: 0; }
 
     .skill-cat-name {
       font-family: var(--mono);
@@ -723,9 +726,11 @@
 
       #about .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       #skills .skills-grid { grid-template-columns: 1fr; }
-      .skill-category { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.5rem 0; }
-      .skill-category:last-child { padding-left: 0; }
-      .skill-category:nth-child(2) { padding-left: 0; }
+      .skill-category { padding: 1.5rem 0; border-left: none; border-top: 1px solid var(--rule); }
+      .skill-category:nth-child(odd),
+      .skill-category:nth-child(even) { padding-left: 0; padding-right: 0; border-left: none; }
+      .skill-category:first-child { border-top: none; padding-top: 0; }
+      .skill-category:nth-child(2) { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
 
       .cs-placeholder-grid { grid-template-columns: 1fr; }
 
@@ -867,30 +872,48 @@
         <p class="skill-cat-name">Languages</p>
         <div class="skill-list">
           <div class="skill-item"><span class="skill-dot"></span>Python</div>
-          <div class="skill-item"><span class="skill-dot"></span>TypeScript</div>
-          <div class="skill-item"><span class="skill-dot"></span>Go</div>
+          <div class="skill-item"><span class="skill-dot"></span>C++</div>
+          <div class="skill-item"><span class="skill-dot"></span>Java</div>
+          <div class="skill-item"><span class="skill-dot"></span>JavaScript</div>
           <div class="skill-item"><span class="skill-dot"></span>SQL</div>
-          <div class="skill-item"><span class="skill-dot"></span>Bash</div>
+          <div class="skill-item"><span class="skill-dot"></span>Rust</div>
+          <div class="skill-item"><span class="skill-dot"></span>Assembly</div>
         </div>
       </div>
       <div class="skill-category reveal reveal-delay-2">
-        <p class="skill-cat-name">Frameworks &amp; Tools</p>
+        <p class="skill-cat-name">ML &amp; Data</p>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-dot"></span>React / Next.js</div>
-          <div class="skill-item"><span class="skill-dot"></span>Node.js</div>
-          <div class="skill-item"><span class="skill-dot"></span>FastAPI</div>
-          <div class="skill-item"><span class="skill-dot"></span>PostgreSQL</div>
-          <div class="skill-item"><span class="skill-dot"></span>Redis</div>
+          <div class="skill-item"><span class="skill-dot"></span>PyTorch</div>
+          <div class="skill-item"><span class="skill-dot"></span>Pandas</div>
+          <div class="skill-item"><span class="skill-dot"></span>NumPy</div>
+          <div class="skill-item"><span class="skill-dot"></span>Biopython</div>
+          <div class="skill-item"><span class="skill-dot"></span>LangChain</div>
+          <div class="skill-item"><span class="skill-dot"></span>Chroma</div>
+          <div class="skill-item"><span class="skill-dot"></span>RAG</div>
         </div>
       </div>
       <div class="skill-category reveal reveal-delay-3">
-        <p class="skill-cat-name">Infrastructure</p>
+        <p class="skill-cat-name">Infrastructure &amp; Tools</p>
         <div class="skill-list">
-          <div class="skill-item"><span class="skill-dot"></span>Docker / K8s</div>
+          <div class="skill-item"><span class="skill-dot"></span>Flask</div>
+          <div class="skill-item"><span class="skill-dot"></span>FastAPI</div>
+          <div class="skill-item"><span class="skill-dot"></span>REST APIs</div>
+          <div class="skill-item"><span class="skill-dot"></span>Docker</div>
+          <div class="skill-item"><span class="skill-dot"></span>Kubernetes</div>
+          <div class="skill-item"><span class="skill-dot"></span>Git / GitHub</div>
+          <div class="skill-item"><span class="skill-dot"></span>Linux</div>
+          <div class="skill-item"><span class="skill-dot"></span>Bash</div>
           <div class="skill-item"><span class="skill-dot"></span>AWS</div>
-          <div class="skill-item"><span class="skill-dot"></span>CI/CD Pipelines</div>
-          <div class="skill-item"><span class="skill-dot"></span>Terraform</div>
-          <div class="skill-item"><span class="skill-dot"></span>Observability</div>
+          <div class="skill-item"><span class="skill-dot"></span>PostgreSQL / Supabase</div>
+          <div class="skill-item"><span class="skill-dot"></span>Arduino</div>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-4">
+        <p class="skill-cat-name">CS Fundamentals</p>
+        <div class="skill-list">
+          <div class="skill-item"><span class="skill-dot"></span>Data Structures</div>
+          <div class="skill-item"><span class="skill-dot"></span>Algorithms</div>
+          <div class="skill-item"><span class="skill-dot"></span>System Design</div>
         </div>
       </div>
     </div>
