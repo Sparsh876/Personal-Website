@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sparsh Kumar — Software Engineer</title>
+<meta name="description" content="Software engineer working on backend systems, retrieval pipelines, and developer tooling." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #0B0A09;
+  --bg-card:      #16130F;
+  --accent:       #E9A178;
+  --accent-mid:   #C2693C;
+  --accent-dim:   rgba(233, 161, 120, 0.10);
+  --accent-glow:  rgba(233, 161, 120, 0.28);
+  --cream:        #F2EAE0;
+  --cream-muted:  #A89583;
+  --cream-faint:  #5E5044;
+  --rule:         rgba(194, 105, 60, 0.20);
+  --mono:  'IBM Plex Mono', ui-monospace, monospace;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --pad:   3rem;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  background-image: linear-gradient(170deg, #08080A 0%, #191A1E 45%, #0E0D0C 100%);
+  background-attachment: fixed;
+  color: var(--cream);
+  font-family: var(--mono);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+
+a { color: inherit; }
+
+/* ── ambient ── */
+.bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.orb { position: absolute; border-radius: 50%; filter: blur(90px); }
+.orb-1 { width: 650px; height: 650px; background: radial-gradient(circle, rgba(190,92,42,0.24), transparent 70%); top: -160px; left: -180px; }
+.orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(122,62,32,0.20), transparent 70%); top: 55vh; right: -140px; }
+.orb-3 { width: 420px; height: 420px; background: radial-gradient(circle, rgba(233,161,120,0.10), transparent 70%); bottom: 5vh; left: 35%; }
+
+nav, main, footer { position: relative; z-index: 1; }
+
+/* ── nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1.15rem var(--pad);
+  background: rgba(11, 10, 9, 0.72);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-logo { font-size: 13px; font-weight: 500; letter-spacing: 0.25em; text-decoration: none; flex-shrink: 0; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-muted); text-decoration: none;
+  padding-bottom: 3px; border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--accent); border-color: var(--accent); }
+
+/* ── layout ── */
+section { padding: 6rem var(--pad); }
+.section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3.5rem; }
+.section-number { font-size: 11px; letter-spacing: 0.2em; color: var(--cream-faint); flex-shrink: 0; }
+.section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; font-style: italic; }
+.section-rule { flex: 1; height: 1px; background: var(--rule); }
+
+/* ── hero ── */
+#hero { display: grid; grid-template-columns: 1.35fr 1fr; min-height: 100vh; padding: 0; }
+.hero-left { padding: 9rem var(--pad) 5rem; border-right: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; }
+.hero-right { padding: 9rem var(--pad) 5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.hero-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.75rem; }
+.hero-name { font-family: var(--serif); font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 300; line-height: 0.98; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+.hero-name em { font-style: italic; color: var(--accent); }
+.hero-title { font-family: var(--serif); font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-style: italic; color: var(--cream-muted); margin-bottom: 2rem; }
+.hero-tagline { color: var(--cream-muted); max-width: 46ch; margin-bottom: 2.75rem; }
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-number { position: absolute; top: 6rem; right: var(--pad); font-family: var(--serif); font-size: clamp(6rem, 12vw, 12rem); font-style: italic; color: rgba(194,105,60,0.09); line-height: 1; user-select: none; pointer-events: none; }
+.hero-aside { display: flex; flex-direction: column; gap: 2rem; }
+.aside-block { border-left: 2px solid var(--accent); padding-left: 1.25rem; }
+.aside-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 0.35rem; }
+.aside-value { font-size: 13px; }
+
+.btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  text-decoration: none; padding: 0.8rem 1.9rem; border: 1px solid currentColor; cursor: pointer;
+  display: inline-block; transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.btn-primary:hover { background: transparent; color: var(--accent); box-shadow: 0 0 24px var(--accent-glow); }
+.btn-ghost { background: transparent; color: var(--cream); border-color: var(--rule); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 24px var(--accent-glow); }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; background: transparent; color: var(--cream-faint); border-color: var(--rule); }
+
+/* ── about ── */
+.about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 5rem; }
+.about-body p { font-family: var(--serif); font-size: clamp(1.1rem, 1.9vw, 1.45rem); line-height: 1.75; color: var(--cream); margin-bottom: 1.5rem; }
+.meta-row { margin-bottom: 1.75rem; }
+.meta-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 0.35rem; }
+.meta-value { font-size: 13px; word-break: break-word; }
+.meta-value a { color: var(--accent); text-decoration: none; }
+.meta-value a:hover { border-bottom: 1px solid var(--accent); }
+
+/* ── skills ── */
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); align-items: start; }
+.skill-category { padding: 2.5rem; border-top: 1px solid var(--rule); transition: background 0.3s; border-radius: 2px; }
+.skill-category:hover { background: var(--accent-dim); }
+.skill-category:nth-child(odd) { padding-left: 0; }
+.skill-category:nth-child(even) { border-left: 1px solid var(--rule); padding-right: 0; }
+.skill-category:nth-child(-n+2) { border-top: none; padding-top: 0; }
+.skill-cat-name { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+.skill-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.skill-item { display: flex; align-items: center; gap: 0.75rem; font-size: 13.5px; transition: color 0.2s, transform 0.2s; }
+.skill-item:hover { color: var(--accent); transform: translateX(5px); }
+.skill-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; transition: box-shadow 0.2s; }
+.skill-item:hover .skill-dot { box-shadow: 0 0 6px var(--accent); }
+
+/* ── projects ── */
+.projects-intro { color: var(--cream-muted); line-height: 1.9; max-width: 54ch; margin-bottom: 2.5rem; font-size: 13px; }
+.projects-intro a { color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.projects-intro a:hover { color: var(--accent); border-color: var(--accent); }
+.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.project-card {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 240px; padding: 1.5rem; text-decoration: none; color: inherit;
+  border: 1px solid var(--rule); background: var(--bg-card); position: relative; overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.project-card::before { content: 'PROJECT ' attr(data-n); position: absolute; top: 1.5rem; left: 1.5rem; font-size: 10px; letter-spacing: 0.2em; color: var(--cream-faint); }
+.project-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(233,161,120,0.07), transparent 60%); opacity: 0; transition: opacity 0.3s; }
+.project-card:hover { border-color: var(--accent); box-shadow: 0 0 32px rgba(233,161,120,0.18); transform: translateY(-5px); }
+.project-card:hover::after { opacity: 1; }
+.project-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--rule); padding: 0.25rem 0.6rem; width: fit-content; margin-bottom: 0.6rem; }
+.project-name { font-family: var(--serif); font-size: 1.4rem; font-style: italic; color: var(--cream-faint); }
+.project-card.is-live .project-name { color: var(--cream); }
+.project-cue { margin-top: 0.75rem; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-faint); transition: color 0.3s; }
+.project-arrow { display: inline-block; transition: transform 0.3s; }
+.project-card:hover .project-cue { color: var(--accent); }
+.project-card:hover .project-arrow { transform: translateX(4px); }
+
+/* ── contact ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.contact-heading { font-family: var(--serif); font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; }
+.contact-heading em { font-style: italic; color: var(--accent); }
+.contact-text { font-size: 13px; color: var(--cream-muted); line-height: 1.8; max-width: 42ch; margin-bottom: 2.5rem; }
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; font-size: 13px; border-bottom: 1px solid var(--rule); padding-bottom: 1rem; transition: color 0.2s, padding-left 0.25s; word-break: break-all; }
+.contact-link:last-child { border-bottom: none; padding-bottom: 0; }
+.contact-link:hover { color: var(--accent); padding-left: 8px; }
+.contact-link-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-faint); min-width: 62px; flex-shrink: 0; }
+.contact-card { padding: 3rem 2.5rem; border: 1px solid var(--rule); background: var(--bg-card); position: relative; overflow: hidden; }
+.contact-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(233,161,120,0.06), transparent 60%); pointer-events: none; }
+.contact-card-label { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+.contact-card-heading { font-family: var(--serif); font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 300; line-height: 1.15; margin-bottom: 1rem; }
+.contact-card-heading em { font-style: italic; color: var(--accent); }
+.contact-card-text { font-size: 13px; color: var(--cream-muted); line-height: 1.8; margin-bottom: 2.25rem; max-width: 34ch; }
+.contact-card-address { display: block; font-size: clamp(13px, 1.5vw, 15px); text-decoration: none; padding-bottom: 1.25rem; margin-bottom: 1.75rem; border-bottom: 1px solid var(--rule); transition: color 0.25s, border-color 0.25s; word-break: break-all; }
+.contact-card-address:hover { color: var(--accent); border-color: var(--accent); }
+.contact-card-alt { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.75rem; font-size: 11px; color: var(--cream-faint); }
+.contact-card-alt a { color: var(--cream-muted); text-decoration: none; border-bottom: 1px solid transparent; }
+.contact-card-alt a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── footer ── */
+footer { border-top: 1px solid var(--rule); padding: 2rem var(--pad); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.footer-copy { font-size: 11px; color: var(--cream-faint); }
+.footer-back { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-muted); text-decoration: none; }
+.footer-back:hover { color: var(--accent); }
+
+/* ── project detail view ── */
+.detail { max-width: 900px; margin: 0 auto; padding: 9rem var(--pad) 5rem; }
+.detail-back { display: inline-block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); text-decoration: none; margin-bottom: 2.5rem; }
+.detail-back:hover { color: var(--accent); }
+.detail-number { display: block; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+.detail-title { font-family: var(--serif); font-size: clamp(2.75rem, 7vw, 5rem); font-weight: 300; line-height: 1.05; margin-bottom: 1.25rem; }
+.detail-title em { font-style: italic; color: var(--accent); }
+.detail-tagline { font-family: var(--serif); font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-style: italic; color: var(--cream-muted); margin-bottom: 2rem; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--rule); padding: 0.25rem 0.6rem; }
+.detail-rule { height: 1px; background: var(--rule); margin: 3rem 0; }
+.detail-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+.detail-section { margin-bottom: 3rem; }
+.detail-section h2 { font-family: var(--serif); font-size: 1.75rem; font-weight: 300; font-style: italic; margin-bottom: 1rem; }
+.detail-section p { color: var(--cream-muted); line-height: 1.9; margin-bottom: 1rem; max-width: 66ch; }
+.detail-section strong { color: var(--cream); font-weight: 400; }
+.detail-section code { color: var(--accent); font-size: 0.92em; }
+.detail-section .stub { border-left: 2px solid var(--accent); padding: 0.75rem 0 0.75rem 1.5rem; color: var(--cream-faint); font-style: italic; }
+
+.pipeline { border: 1px solid var(--rule); background: var(--bg-card); padding: 1.5rem; overflow-x: auto; }
+.pipeline pre { font-size: 11.5px; line-height: 1.9; color: var(--cream-muted); white-space: pre; }
+.pipeline .hl { color: var(--accent); }
+
+.spec { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 13px; }
+.spec th, .spec td { text-align: left; padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.spec th { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-faint); font-weight: 400; white-space: nowrap; padding-right: 2rem; }
+.spec td { color: var(--cream-muted); }
+.spec tr:last-child th, .spec tr:last-child td { border-bottom: none; }
+
+/* ── demo console ── */
+.demo { border: 1px solid var(--rule); background: var(--bg-card); margin: 1.5rem 0 0; }
+.demo-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--rule); }
+.demo-bar-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+.demo-bar-note { font-size: 10.5px; color: var(--cream-faint); }
+.demo-ctx { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--rule); font-size: 11px; color: var(--cream-faint); display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.demo-ctx b { color: var(--cream-muted); font-weight: 400; }
+.demo-body { padding: 1.5rem 1.25rem; }
+.demo-qs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.demo-q {
+  font-family: var(--mono); font-size: 11.5px; text-align: left; cursor: pointer;
+  background: transparent; color: var(--cream-muted); border: 1px solid var(--rule);
+  padding: 0.5rem 0.85rem; transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.demo-q:hover { color: var(--accent); border-color: var(--accent); }
+.demo-q.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+.demo-q[disabled] { opacity: 0.4; cursor: wait; }
+.demo-prompt { font-size: 12px; color: var(--cream-faint); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+.demo-question { color: var(--cream); margin-bottom: 1.5rem; font-size: 13.5px; }
+.demo-answer { font-size: 13.5px; line-height: 1.95; color: var(--cream); min-height: 3rem; white-space: pre-wrap; }
+.demo-answer .cursor { display: inline-block; width: 7px; height: 15px; background: var(--accent); vertical-align: -2px; animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.cite {
+  font-family: var(--mono); font-size: 10.5px; cursor: pointer; vertical-align: super;
+  background: var(--accent-dim); color: var(--accent); border: 1px solid var(--rule);
+  border-radius: 2px; padding: 0 4px; margin: 0 1px; line-height: 1.4; transition: background 0.2s;
+}
+.cite:hover, .cite.lit { background: var(--accent); color: var(--bg); }
+.demo-sources { margin-top: 2rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+.demo-sources-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
+.src { border: 1px solid var(--rule); padding: 0.9rem 1rem; margin-bottom: 0.75rem; transition: border-color 0.3s, background 0.3s; }
+.src.lit { border-color: var(--accent); background: var(--accent-dim); }
+.src-head { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; font-size: 10.5px; color: var(--cream-faint); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.src-n { color: var(--accent); }
+.src-section { color: var(--cream-muted); }
+.src-body { font-size: 12px; line-height: 1.8; color: var(--cream-muted); }
+.src-link { display: inline-block; margin-top: 0.5rem; font-size: 10.5px; color: var(--cream-faint); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.src-link:hover { color: var(--accent); border-color: var(--accent); }
+.demo-foot { padding: 0.85rem 1.25rem; border-top: 1px solid var(--rule); font-size: 10.5px; color: var(--cream-faint); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.demo-foot a { color: var(--cream-muted); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.demo-foot a:hover { color: var(--accent); border-color: var(--accent); }
+.demo-frame { display: block; width: 100%; height: 760px; border: 0; background: var(--bg); }
+.demo-live { padding: 3rem 1.5rem; text-align: center; }
+.demo-live p { color: var(--cream-muted); font-size: 13px; max-width: 46ch; margin: 0 auto 1.5rem; line-height: 1.9; }
+
+/* ── reveal ── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.22s; } .d3 { transition-delay: 0.34s; } .d4 { transition-delay: 0.46s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ── responsive ── */
+@media (max-width: 1000px) {
+  :root { --pad: 1.5rem; }
+  nav { flex-wrap: wrap; gap: 0.75rem 1.25rem; padding: 0.9rem var(--pad); }
+  .nav-links { gap: 1.25rem; flex-wrap: wrap; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.1em; }
+  section { padding: 4rem var(--pad); }
+  #hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 7rem var(--pad) 3rem; border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero-right { padding: 2.5rem var(--pad) 4rem; }
+  .hero-number { font-size: 5rem; top: 1rem; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .skill-category { padding: 1.5rem 0; border-left: none !important; border-top: 1px solid var(--rule); padding-left: 0 !important; padding-right: 0 !important; }
+  .skill-category:first-child { border-top: none; padding-top: 0; }
+  .skill-category:nth-child(2) { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+  .project-grid { grid-template-columns: 1fr; }
+  .detail { padding: 7rem var(--pad) 4rem; }
+  .demo-frame { height: 560px; }
+  .demo-q { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+</div>
+
+<nav>
+  <a class="nav-logo" href="#/">SK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#/about">About</a></li>
+    <li><a href="#/skills">Skills</a></li>
+    <li><a href="#/projects">Projects</a></li>
+    <li><a href="#/contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="view"></main>
+
+<footer>
+  <p class="footer-copy">© 2026 Sparsh Kumar. Built with care.</p>
+  <a class="footer-back" href="#/">Back to top ↑</a>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   EDIT HERE — all site content lives in these objects.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const SITE = {
+  initials: "SK",
+  name: ["Sparsh", "Kumar"],
+  role: "Software Engineer",
+  title: "Building thoughtful software",
+  tagline: "I write clean code, obsess over systems, and care deeply about how software feels to the people who use it.",
+  location: "San Francisco, CA",
+  status: "Open to opportunities",
+  focus: "Backend · ML Systems · APIs",
+  email: "sparshkumar1511@gmail.com",
+  github: "https://github.com/Sparsh876",
+  linkedin: "https://www.linkedin.com/in/sparsh-kumar-440364297",
+  resume: "SK_Resume-A.pdf",
+  about: [
+    "I'm a software engineer with a passion for building reliable, scalable systems. I like working on hard problems — the kind that require sitting with them for a while before the solution becomes obvious.",
+    "Outside of code, I'm drawn to design systems, developer tooling, and the intersection of engineering and craft. I believe the best software feels inevitable — like it couldn't have been built any other way.",
+    "When I'm not at a keyboard, you'll find me hiking, reading, or watching talks I'll never have time to implement."
+  ],
+  skills: [
+    { name: "Languages", items: ["Python", "C++", "Java", "JavaScript", "SQL", "Rust", "Assembly"] },
+    { name: "ML & Data", items: ["PyTorch", "Pandas", "NumPy", "Biopython", "LangChain", "Chroma", "RAG"] },
+    { name: "Infrastructure & Tools", items: ["Flask", "FastAPI", "REST APIs", "Docker", "Kubernetes", "Git / GitHub", "Linux", "Bash", "AWS", "PostgreSQL / Supabase", "Arduino"] },
+    { name: "CS Fundamentals", items: ["Data Structures", "Algorithms", "System Design"] }
+  ]
+};
+
+/* Set this once the Streamlit app is hosted (Hugging Face Spaces / Streamlit Cloud).
+   Append ?embed=true&embed_options=dark_theme so it renders without the host chrome.
+   Leave empty and the page shows the recorded demo only. */
+const LIVE_DEMO_URL = "";
+
+/* The recorded session that powers the in-page demo.
+   REPLACE the placeholder turns below with a transcript from a real run —
+   see "Recording a real session" in the notes at the bottom of this file. */
+const DEMO = {
+  isRealTranscript: false,
+  company: "Example Corp (EXMPL)",
+  filing: "10-K, FY2025 — filed 2026-02-13",
+  indexed: "412 chunks · 1 filing",
+  turns: [
+    {
+      q: "What does the company name as its biggest supply-chain risk?",
+      a: "Single-source component dependency is the risk the filing puts first [1]. Management states that several critical components come from one supplier each, and that qualifying a replacement takes multiple quarters [1]. The filing pairs this with regional concentration — a majority of contract manufacturing sits in one geography [2].\n\nNote that [2] is framed as a general risk factor rather than a quantified exposure; the filing does not give a percentage breakdown by facility.",
+      sources: [
+        { n: 1, section: "Item 1A — Risk Factors", excerpt: "We depend on single or limited source suppliers for certain critical components. Qualifying an alternative supplier for these components has historically required several quarters, and an interruption in supply could delay product shipments and harm operating results." },
+        { n: 2, section: "Item 1A — Risk Factors", excerpt: "A substantial majority of our contract manufacturing capacity is concentrated in a single geographic region. Political, public health, or natural events affecting that region could disrupt our ability to meet customer demand." }
+      ]
+    },
+    {
+      q: "How did operating cash flow change year over year?",
+      a: "The MD&A reports operating cash flow rising year over year, and attributes the increase to higher net income plus favourable working-capital movement, chiefly slower inventory build [1].\n\nThe filing also flags a partially offsetting item: a one-time payment settled during the year that reduced cash from operations [2]. That makes the underlying run-rate improvement larger than the headline change.",
+      sources: [
+        { n: 1, section: "Item 7 — MD&A", excerpt: "Net cash provided by operating activities increased compared with the prior year, driven by higher net income and a smaller increase in inventories than in the prior period." },
+        { n: 2, section: "Item 7 — MD&A", excerpt: "Operating cash flow for the year reflects a one-time payment made in connection with the resolution of a previously disclosed matter, which did not recur from prior periods." }
+      ]
+    },
+    {
+      q: "Is there any disclosure about pending litigation over patents?",
+      a: "The excerpts retrieved do not contain a patent-litigation disclosure. Item 3 refers out to the notes to the financial statements rather than describing matters inline [1].\n\nTo answer this properly you would want the Commitments and Contingencies note under Item 8, which is where the specific matters and any accrual are described. Index that section and ask again.",
+      sources: [
+        { n: 1, section: "Item 3 — Legal Proceedings", excerpt: "For a description of our legal proceedings, see the information set forth under the caption Commitments and Contingencies in the notes to the consolidated financial statements included in Part II, Item 8 of this report." }
+      ]
+    }
+  ]
+};
+
+const PROJECTS = [
+  {
+    slug: "filings-dashboard", n: "01", live: true,
+    name: "Filings Dashboard", cardTag: "RAG · Streamlit",
+    titleHtml: 'Filings <em>Dashboard</em>',
+    tagline: "Ask a 10-K a question and get an answer that cites itself.",
+    tags: ["RAG", "Python", "Streamlit", "LangChain", "Chroma", "SEC EDGAR"],
+    meta: [
+      ["Role", "Solo — design &amp; build"],
+      ["Stack", "Python · Streamlit · LangChain · Chroma · Claude"],
+      ["Year", "2026"],
+      ["Source", "Repo link coming"]
+    ],
+    demo: true,
+    sections: [
+      { h: "Overview", p: [
+        "Filings Dashboard is a research tool for public-company filings. Pick a ticker, browse its recent 10-K, 10-Q and 8-K submissions straight from SEC EDGAR, chart the reported XBRL financials, and ask plain-language questions answered only from the filing text — with every claim cited back to the exact excerpt, section, and SEC.gov URL it came from.",
+        "Retrieval runs entirely in-process. Chunking, embedding and similarity search never leave the machine; only the final answer synthesis calls an API. Indexing a 10-K costs nothing and works offline."
+      ]},
+      { h: "The problem", p: [
+        "A 10-K runs to a few hundred pages of deliberately careful language, and the sentence that matters is rarely where you'd guess. Full-text search returns every instance of a word with no sense of which one answers your question. General chatbots will answer confidently about a filing they haven't read, and there's no way to check them.",
+        "The requirement I set was narrower than \"summarise this filing\": every specific number, date, or quoted phrase in an answer has to be traceable to the excerpt it came from, and the tool has to say so plainly when the filings don't contain the answer."
+      ]},
+      { h: "How it works", html: '<div class="pipeline"><pre>EDGAR JSON APIs ──▶ <span class="hl">sec/edgar.py</span>     tickers, filing history, XBRL facts (rate-limited)\n                    <span class="hl">sec/parse.py</span>     HTML → text, split on Item headings, cached to disk\n                          │\n                          ▼\n                    <span class="hl">rag/store.py</span>     LangChain splitter → local embeddings → Chroma\n                          │\n                          ▼\n                    <span class="hl">rag/pipeline.py</span>  similarity search → Claude (streamed) → cited answer\n                          │\n                          ▼\n                    <span class="hl">app.py</span>           Streamlit UI</pre></div>' },
+      { h: "The retrieval pipeline", p: ["Dense retrieval, with the structure of the document doing more work than the embedding model:"], html: '<table class="spec">' +
+        '<tr><th>Structure</th><td>Filings are split on <code>Item</code> headings before chunking, so every chunk carries a real section label — "Risk Factors", "MD&amp;A" — instead of a byte offset. That label shows up in the citation.</td></tr>' +
+        '<tr><th>Chunking</th><td>LangChain <code>RecursiveCharacterTextSplitter</code>, 1400 characters with 200 of overlap, splitting on paragraph → line → sentence → word.</td></tr>' +
+        '<tr><th>Embeddings</th><td><code>all-MiniLM-L6-v2</code> via sentence-transformers, run locally and normalised. ~90MB, cached after first use.</td></tr>' +
+        '<tr><th>Store</th><td>Chroma, persisted to disk. Indexing is idempotent — a filing already present is skipped, keyed on its accession number.</td></tr>' +
+        '<tr><th>Retrieval</th><td>Similarity search with relevance scores, top 8, with optional metadata filters on ticker and form type.</td></tr>' +
+        '<tr><th>Synthesis</th><td>Claude over the numbered excerpts, streamed so long answers don\'t stall the UI. The system prompt requires a citation for every figure and forbids answering beyond the excerpts.</td></tr>' +
+        '</table>' },
+      { h: "Decisions worth defending", p: [
+        "<strong>Filings are immutable once accepted</strong>, so extracted text is cached on disk keyed by URL and never re-fetched. The cache only needs invalidating when the extraction logic itself changes.",
+        "<strong>Embeddings stay local.</strong> Sending every chunk of every filing to an embedding API would cost real money per document and make the tool useless offline. A small local model is enough when the corpus is one company's filings rather than the open web.",
+        "<strong>Retrieval failure is a first-class outcome.</strong> When nothing matches, the pipeline says so and names what filing or section would hold the answer, instead of letting the model improvise. If credentials are missing, retrieval still runs and the matching excerpts are shown — a degraded answer beats an error page."
+      ]},
+      { h: "What I'd do next", p: [
+        "The retrieval is deliberately plain — vector similarity and nothing else. No reranker, no hybrid keyword search, no query rewriting. For questions phrased close to the filing's own language it works well; for oblique ones it retrieves plausible-but-wrong sections, and a BM25 hybrid with a cross-encoder rerank is the obvious fix.",
+        "Beyond that: table-aware extraction, since financial tables currently flatten into text and lose their structure, and cross-filing comparison — \"how did this risk factor change year over year\" — which needs retrieval to reason across accession numbers rather than within one."
+      ]}
+    ]
+  },
+  { slug: "project-02", n: "02", live: false, name: "Project name here", cardTag: "Write-up in progress",
+    titleHtml: 'Project <em>name here</em>', tagline: "A one-line description of what this is.",
+    tags: [], meta: [["Role","—"],["Stack","—"],["Year","—"],["Source","—"]], demo: false,
+    sections: [ { h: "Overview", stub: "Write-up in progress." } ] },
+  { slug: "project-03", n: "03", live: false, name: "Project name here", cardTag: "Write-up in progress",
+    titleHtml: 'Project <em>name here</em>', tagline: "A one-line description of what this is.",
+    tags: [], meta: [["Role","—"],["Stack","—"],["Year","—"],["Source","—"]], demo: false,
+    sections: [ { h: "Overview", stub: "Write-up in progress." } ] }
+];
+
+/* ═══════════════════════════════════════════════════════════════════
+   Rendering
+   ═══════════════════════════════════════════════════════════════════ */
+
+const view = document.getElementById("view");
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function homeHTML() {
+  const skills = SITE.skills.map((c, i) => `
+    <div class="skill-category reveal d${i + 1}">
+      <p class="skill-cat-name">${c.name}</p>
+      <div class="skill-list">
+        ${c.items.map((s) => `<div class="skill-item"><span class="skill-dot"></span>${esc(s)}</div>`).join("")}
+      </div>
+    </div>`).join("");
+
+  const cards = PROJECTS.map((p, i) => `
+    <a href="#/p/${p.slug}" class="project-card${p.live ? " is-live" : ""} reveal d${i + 1}" data-n="${p.n}">
+      <span class="project-tag">${esc(p.cardTag)}</span>
+      <p class="project-name">${esc(p.name)}</p>
+      <span class="project-cue">${p.live ? "Read the write-up" : "View"} <span class="project-arrow">→</span></span>
+    </a>`).join("");
+
+  return `
+  <section id="hero">
+    <div class="hero-left">
+      <p class="hero-label">// ${esc(SITE.role)}</p>
+      <h1 class="hero-name">${esc(SITE.name[0])}<br /><em>${esc(SITE.name[1])}</em></h1>
+      <p class="hero-title">${esc(SITE.title)}</p>
+      <p class="hero-tagline">${esc(SITE.tagline)}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#/contact">Get in touch</a>
+        <a class="btn btn-ghost" href="#/projects">My work</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-number">01</div>
+      <div class="hero-aside">
+        <div class="aside-block"><p class="aside-label">Location</p><p class="aside-value">${esc(SITE.location)}</p></div>
+        <div class="aside-block"><p class="aside-label">Currently</p><p class="aside-value">${esc(SITE.status)}</p></div>
+        <div class="aside-block"><p class="aside-label">Focus</p><p class="aside-value">${esc(SITE.focus)}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-number">// 02</span><h2 class="section-title">About me</h2><div class="section-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-body reveal d1">${SITE.about.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+      <div class="reveal d2">
+        <div class="meta-row"><p class="meta-label">Email</p><p class="meta-value"><a href="mailto:${SITE.email}">${SITE.email}</a></p></div>
+        <div class="meta-row"><p class="meta-label">GitHub</p><p class="meta-value"><a href="${SITE.github}" target="_blank" rel="noopener">${SITE.github}</a></p></div>
+        <div class="meta-row"><p class="meta-label">LinkedIn</p><p class="meta-value"><a href="${SITE.linkedin}" target="_blank" rel="noopener">${SITE.linkedin}</a></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-number">// 03</span><h2 class="section-title">Skills</h2><div class="section-rule"></div>
+    </div>
+    <div class="skills-grid">${skills}</div>
+  </section>
+
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-number">// 04</span><h2 class="section-title">Projects</h2><div class="section-rule"></div>
+    </div>
+    <p class="projects-intro reveal">
+      What I'm building. One write-up is up — with a demo you can actually run in the page —
+      and the others are still going up. Or <a href="#/contact">ask me directly</a> what I'm working on.
+    </p>
+    <div class="project-grid">${cards}</div>
+  </section>
+
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-number">// 05</span><h2 class="section-title">Let's talk</h2><div class="section-rule"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal d1">
+        <h3 class="contact-heading">Say <em>hello.</em></h3>
+        <p class="contact-text">Whether you have a role in mind, a project you'd like to collaborate on, or just want to connect — my inbox is open.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="${SITE.github}" target="_blank" rel="noopener"><span class="contact-link-label">GitHub</span>${SITE.github}</a>
+          <a class="contact-link" href="${SITE.linkedin}" target="_blank" rel="noopener"><span class="contact-link-label">LinkedIn</span>${SITE.linkedin}</a>
+          <a class="contact-link" href="${SITE.resume}" target="_blank" rel="noopener"><span class="contact-link-label">Résumé</span>Download PDF</a>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="contact-card">
+          <span class="contact-card-label">// Direct</span>
+          <h4 class="contact-card-heading">Drop me a <em>line.</em></h4>
+          <p class="contact-card-text">No forms, no funnels. Write to me directly and it lands straight in my inbox.</p>
+          <a class="contact-card-address" href="mailto:${SITE.email}">${SITE.email}</a>
+          <a class="btn btn-primary" style="width:100%;text-align:center" href="mailto:${SITE.email}">Compose an email</a>
+          <div class="contact-card-alt">
+            <span>Prefer something else?</span>
+            <a href="${SITE.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+            <span>/</span>
+            <a href="${SITE.github}" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function projectHTML(p) {
+  const meta = p.meta.map(([k, v]) => `<div><span class="meta-label">${k}</span><p class="meta-value">${v}</p></div>`).join("");
+  const secs = p.sections.map((s) => `
+    <section class="detail-section">
+      <h2>${esc(s.h)}</h2>
+      ${s.stub ? `<p class="stub">${esc(s.stub)}</p>` : ""}
+      ${(s.p || []).map((t) => `<p>${t}</p>`).join("")}
+      ${s.html || ""}
+    </section>`).join("");
+
+  return `
+  <div class="detail">
+    <a class="detail-back" href="#/projects">← All projects</a>
+    <span class="detail-number">// Project ${p.n}</span>
+    <h1 class="detail-title">${p.titleHtml}</h1>
+    <p class="detail-tagline">${esc(p.tagline)}</p>
+    ${p.tags.length ? `<div class="tag-row">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : ""}
+    <div class="detail-rule"></div>
+    <div class="detail-meta">${meta}</div>
+    ${p.demo ? `<section class="detail-section"><h2>Try it</h2>${demoHTML()}</section>` : ""}
+    ${secs}
+  </div>`;
+}
+
+function demoHTML() {
+  const qs = DEMO.turns.map((t, i) => `<button class="demo-q" data-i="${i}">${esc(t.q)}</button>`).join("");
+  return `
+  <div class="demo" id="demo">
+    <div class="demo-bar">
+      <span class="demo-bar-label">// ${DEMO.isRealTranscript ? "Recorded session" : "Sample session"}</span>
+      <span class="demo-bar-note">Replays a captured run — no API calls from this page</span>
+    </div>
+    <div class="demo-ctx">
+      <span><b>Company</b> ${esc(DEMO.company)}</span>
+      <span><b>Filing</b> ${esc(DEMO.filing)}</span>
+      <span><b>Index</b> ${esc(DEMO.indexed)}</span>
+    </div>
+    <div class="demo-body">
+      <p class="demo-prompt">Ask the filings —</p>
+      <div class="demo-qs">${qs}</div>
+      <div id="demo-out"></div>
+    </div>
+    <div class="demo-foot">
+      <span>${DEMO.isRealTranscript ? "Transcript from a real run of the app." : "Placeholder transcript — swap in a real run before shipping."}</span>
+      <span id="demo-live-slot"></span>
+    </div>
+  </div>
+  ${LIVE_DEMO_URL ? `
+  <div class="demo" id="demo-live">
+    <div class="demo-bar">
+      <span class="demo-bar-label">// Live app</span>
+      <span class="demo-bar-note">Loads on click — free hosting sleeps, so allow up to a minute</span>
+    </div>
+    <div class="demo-live" id="demo-live-stage">
+      <p>The real Streamlit app, embedded. It runs on a hosted machine, not in this page.</p>
+      <button class="btn btn-primary" id="demo-launch">Launch live app</button>
+    </div>
+    <div class="demo-foot">
+      <span>Embeds a hosted Streamlit app.</span>
+      <a href="${LIVE_DEMO_URL}" target="_blank" rel="noopener">Open in a new tab ↗</a>
+    </div>
+  </div>` : ""}`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Demo engine — streams a captured answer, wires citations to sources
+   ═══════════════════════════════════════════════════════════════════ */
+
+let streamTimer = null;
+
+function renderCites(text) {
+  return esc(text).replace(/\[(\d+)\]/g, (_, n) => `<button class="cite" data-n="${n}">${n}</button>`);
+}
+
+function runTurn(i) {
+  const turn = DEMO.turns[i];
+  const out = document.getElementById("demo-out");
+  if (!turn || !out) return;
+
+  clearTimeout(streamTimer);
+  document.querySelectorAll(".demo-q").forEach((b, j) => {
+    b.classList.toggle("active", j === i);
+    b.disabled = true;
+  });
+
+  out.innerHTML = `
+    <p class="demo-question">${esc(turn.q)}</p>
+    <div class="demo-answer" id="demo-answer"></div>
+    <div class="demo-sources" id="demo-srcs" hidden>
+      <p class="demo-sources-label">Sources — retrieved before the answer was written</p>
+      ${turn.sources.map((s) => `
+        <div class="src" data-n="${s.n}">
+          <div class="src-head">
+            <span class="src-n">[${s.n}]</span>
+            <span>${esc(DEMO.company)}</span>
+            <span class="src-section">${esc(s.section)}</span>
+          </div>
+          <p class="src-body">"${esc(s.excerpt)}"</p>
+          <a class="src-link" href="https://www.sec.gov/edgar/searchedgar/companysearch" target="_blank" rel="noopener">SEC.gov ↗</a>
+        </div>`).join("")}
+    </div>`;
+
+  const answerEl = document.getElementById("demo-answer");
+  const srcsEl = document.getElementById("demo-srcs");
+  const full = turn.a;
+  let n = 0;
+
+  (function step() {
+    // Background tabs throttle timers to ~1s, which would leave the answer
+    // crawling for minutes. If the tab isn't visible, just finish.
+    n = document.hidden ? full.length : Math.min(full.length, n + 2);
+    answerEl.innerHTML = renderCites(full.slice(0, n)) + (n < full.length ? '<span class="cursor"></span>' : "");
+    if (n < full.length) {
+      streamTimer = setTimeout(step, 12);
+    } else {
+      srcsEl.hidden = false;
+      document.querySelectorAll(".demo-q").forEach((b) => (b.disabled = false));
+    }
+  })();
+}
+
+function litCitation(n) {
+  document.querySelectorAll(".src").forEach((s) => s.classList.toggle("lit", s.dataset.n === n));
+  document.querySelectorAll(".cite").forEach((c) => c.classList.toggle("lit", c.dataset.n === n));
+  const target = document.querySelector(`.src[data-n="${n}"]`);
+  if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Router
+   ═══════════════════════════════════════════════════════════════════ */
+
+function render() {
+  const hash = location.hash.replace(/^#\/?/, "");
+  clearTimeout(streamTimer);
+
+  if (hash.startsWith("p/")) {
+    const p = PROJECTS.find((x) => x.slug === hash.slice(2));
+    if (p) {
+      document.title = `${p.name} — Sparsh Kumar`;
+      view.innerHTML = projectHTML(p);
+      setTimeout(() => window.scrollTo(0, 0), 0);
+      afterRender();
+      return;
+    }
+  }
+
+  document.title = "Sparsh Kumar — Software Engineer";
+  view.innerHTML = homeHTML();
+  // The browser runs its own scroll restoration after this handler, so a
+  // synchronous scroll here gets overwritten. Defer to the next frame.
+  const target = hash && document.getElementById(hash);
+  // rAF does not fire in a background tab; setTimeout does.
+  setTimeout(() => {
+    if (target) target.scrollIntoView({ behavior: "auto", block: "start" });
+    else window.scrollTo(0, 0);
+  }, 0);
+  afterRender();
+}
+
+function afterRender() {
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  const launch = document.getElementById("demo-launch");
+  if (launch) {
+    launch.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.className = "demo-frame";
+      frame.src = LIVE_DEMO_URL;
+      frame.loading = "lazy";
+      frame.title = "Filings Dashboard — live app";
+      document.getElementById("demo-live-stage").replaceWith(frame);
+    });
+  }
+
+  markNav();
+}
+
+function markNav() {
+  const hash = location.hash.replace(/^#\/?/, "");
+  document.querySelectorAll(".nav-links a").forEach((a) => {
+    a.classList.toggle("active", a.getAttribute("href") === "#/" + hash);
+  });
+}
+
+/* Delegated clicks: demo questions and citations. */
+document.addEventListener("click", (e) => {
+  const q = e.target.closest(".demo-q");
+  if (q) { runTurn(Number(q.dataset.i)); return; }
+  const c = e.target.closest(".cite");
+  if (c) { litCitation(c.dataset.n); return; }
+  const s = e.target.closest(".src");
+  if (s) litCitation(s.dataset.n);
+});
+
+/* Scroll-spy on the home view. */
+let spyTick;
+window.addEventListener("scroll", () => {
+  if (location.hash.includes("/p/")) return;
+  clearTimeout(spyTick);
+  spyTick = setTimeout(() => {
+    const secs = [...document.querySelectorAll("section[id]")];
+    const cur = secs.filter((s) => s.getBoundingClientRect().top <= 120).pop();
+    if (!cur) return;
+    document.querySelectorAll(".nav-links a").forEach((a) => {
+      a.classList.toggle("active", a.getAttribute("href") === "#/" + cur.id);
+    });
+  }, 80);
+}, { passive: true });
+
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+window.addEventListener("hashchange", render);
+render();
+</script>
+
+<!--
+  ─────────────────────────────────────────────────────────────────────
+  NOTES
+
+  Deploying to Vercel
+    This is one static file with no build step. Either rename it to
+    index.html at the repo root, or add a vercel.json rewrite. Vercel
+    serves it from its CDN; nothing here needs a server.
+
+  The RAG demo
+    The in-page demo REPLAYS a captured session. Nothing executes —
+    no retrieval, no API calls, no keys in this file. That is why it
+    loads instantly and never sleeps.
+
+  Recording a real session
+    1. Run the app locally:  streamlit run app.py
+    2. Index a filing and ask a question you like the answer to.
+    3. Copy the question, the answer text (keep the [1] [2] markers),
+       and for each source: its Item section and the excerpt shown.
+    4. Paste them into DEMO.turns above and set isRealTranscript: true.
+    The placeholder currently uses a fictional "Example Corp" on
+    purpose — it must not read as real SEC data until you replace it.
+
+  Adding the live app later
+    Host the Streamlit app (Hugging Face Spaces suits it — torch and
+    sentence-transformers are too large for Vercel's function limits),
+    then set LIVE_DEMO_URL above. A second panel appears with a
+    click-to-load iframe. Remember: that runs on the host, not here.
+  ─────────────────────────────────────────────────────────────────────
+-->
+</body>
+</html>
