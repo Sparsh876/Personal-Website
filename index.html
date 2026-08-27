@@ -532,6 +532,8 @@
     .placeholder-card:hover .placeholder-cue { color: var(--accent); }
     .placeholder-card:hover .placeholder-arrow { transform: translateX(4px); }
 
+    .placeholder-card.is-live .placeholder-name { color: var(--cream); }
+
     .placeholder-name {
       font-family: var(--serif);
       font-size: 1.4rem;
@@ -928,15 +930,14 @@
     </div>
     <div class="projects-wrapper">
       <p class="projects-intro reveal">
-        Three things I'm building right now. The write-ups are still going
-        up — open one to see where it stands, or
-        <a href="#contact">ask me directly</a> what I'm working on.
+        What I'm building. One write-up is up; the others are still going
+        up — or <a href="#contact">ask me directly</a> what I'm working on.
       </p>
       <div class="cs-placeholder-grid">
-        <a href="projects/project-01.html" class="placeholder-card reveal reveal-delay-1" data-n="01">
-          <span class="placeholder-tag">Write-up in progress</span>
-          <p class="placeholder-name">Project name here</p>
-          <span class="placeholder-cue">View <span class="placeholder-arrow">→</span></span>
+        <a href="projects/project-01.html" class="placeholder-card is-live reveal reveal-delay-1" data-n="01">
+          <span class="placeholder-tag">RAG · Streamlit</span>
+          <p class="placeholder-name">Filings Dashboard</p>
+          <span class="placeholder-cue">Read the write-up <span class="placeholder-arrow">→</span></span>
         </a>
         <a href="projects/project-02.html" class="placeholder-card reveal reveal-delay-2" data-n="02">
           <span class="placeholder-tag">Write-up in progress</span>

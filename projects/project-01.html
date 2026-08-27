@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project 01 — Sparsh Kumar</title>
+  <title>Filings Dashboard — Sparsh Kumar</title>
+  <meta name="description" content="SEC filings explorer with grounded, cited Q&A over 10-K/10-Q/8-K documents. Local retrieval with Chroma and sentence-transformers; answer synthesis with Claude." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -23,56 +24,192 @@
 
   <main>
     <span class="project-number">// Project 01</span>
-    <h1 class="project-title">Project <em>name here</em></h1>
-    <p class="project-tagline">A one-line description of what this is.</p>
-    <span class="project-status">Coming soon</span>
+    <h1 class="project-title">Filings <em>Dashboard</em></h1>
+    <p class="project-tagline">
+      Ask a 10-K a question and get an answer that cites itself.
+    </p>
 
-    <div class="project-meta">
-      <div>
-        <span class="meta-label">Role</span>
-        <p class="meta-value">—</p>
-      </div>
-      <div>
-        <span class="meta-label">Stack</span>
-        <p class="meta-value">—</p>
-      </div>
-      <div>
-        <span class="meta-label">Year</span>
-        <p class="meta-value">—</p>
-      </div>
-      <div>
-        <span class="meta-label">Links</span>
-        <p class="meta-value">—</p>
-      </div>
+    <div class="tag-row">
+      <span class="tag">RAG</span>
+      <span class="tag">Python</span>
+      <span class="tag">Streamlit</span>
+      <span class="tag">LangChain</span>
+      <span class="tag">Chroma</span>
+      <span class="tag">SEC EDGAR</span>
     </div>
 
     <div class="project-rule"></div>
 
+    <div class="project-meta">
+      <div>
+        <span class="meta-label">Role</span>
+        <p class="meta-value">Solo — design &amp; build</p>
+      </div>
+      <div>
+        <span class="meta-label">Stack</span>
+        <p class="meta-value">Python · Streamlit · LangChain · Chroma · Claude</p>
+      </div>
+      <div>
+        <span class="meta-label">Year</span>
+        <p class="meta-value">2026</p>
+      </div>
+      <div>
+        <span class="meta-label">Source</span>
+        <p class="meta-value">Repo link coming</p>
+      </div>
+    </div>
+
     <section class="project-section">
       <h2>Overview</h2>
-      <p class="placeholder-note">
-        Write-up in progress. What the project is, who it's for, and why it exists.
+      <p>
+        Filings Dashboard is a research tool for public-company filings. Pick a ticker,
+        browse its recent 10-K, 10-Q and 8-K submissions straight from SEC EDGAR, chart
+        the reported XBRL financials, and ask plain-language questions answered only from
+        the filing text — with every claim cited back to the exact excerpt, section, and
+        SEC.gov URL it came from.
+      </p>
+      <p>
+        Retrieval runs entirely on the machine it's installed on. Chunking, embedding and
+        similarity search never leave the process; only the final answer synthesis calls
+        an API. Indexing a 10-K costs nothing and works offline.
       </p>
     </section>
 
     <section class="project-section">
+      <h2>Live demo</h2>
+      <div class="demo-block">
+        <div class="demo-bar">
+          <span class="demo-bar-label">// Interactive</span>
+          <span class="demo-bar-note">Loads on click — best on a desktop screen</span>
+        </div>
+        <div class="demo-stage" id="demo-stage">
+          <div>
+            <p id="demo-copy">
+              The dashboard runs as a live Streamlit app. It isn't deployed yet — once it
+              is, this panel loads the real thing inline, no new tab.
+            </p>
+            <button class="demo-btn" id="demo-btn" disabled>Launch demo</button>
+          </div>
+        </div>
+        <div class="demo-foot">
+          <span>Embeds a hosted Streamlit app; nothing runs on this page.</span>
+          <a id="demo-newtab" href="#" hidden target="_blank" rel="noopener">Open in a new tab ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section">
       <h2>The problem</h2>
-      <p class="placeholder-note">
-        What was broken or missing before this existed.
+      <p>
+        A 10-K runs to a few hundred pages of deliberately careful language, and the
+        sentence that matters is rarely where you'd guess. Full-text search returns every
+        instance of a word with no sense of which one answers your question. General
+        chatbots will answer confidently about a filing they haven't read, and there's no
+        way to check them.
+      </p>
+      <p>
+        The requirement I set was narrower than "summarise this filing": every specific
+        number, date, or quoted phrase in an answer has to be traceable to the excerpt it
+        came from, and the tool has to say so plainly when the filings don't contain the
+        answer.
       </p>
     </section>
 
     <section class="project-section">
       <h2>How it works</h2>
-      <p class="placeholder-note">
-        Architecture, key decisions, and the tradeoffs behind them.
+      <div class="pipeline">
+<pre>EDGAR JSON APIs ──▶ <span class="hl">sec/edgar.py</span>     tickers, filing history, XBRL facts (rate-limited)
+                    <span class="hl">sec/parse.py</span>     HTML → text, split on Item headings, cached to disk
+                          │
+                          ▼
+                    <span class="hl">rag/store.py</span>     LangChain splitter → local embeddings → Chroma
+                          │
+                          ▼
+                    <span class="hl">rag/pipeline.py</span>  similarity search → Claude (streamed) → cited answer
+                          │
+                          ▼
+                    <span class="hl">app.py</span>           Streamlit UI</pre>
+      </div>
+    </section>
+
+    <section class="project-section">
+      <h2>The retrieval pipeline</h2>
+      <p>
+        Dense retrieval, with the structure of the document doing more work than the
+        embedding model:
+      </p>
+      <table class="spec">
+        <tr>
+          <th>Structure</th>
+          <td>Filings are split on <code>Item</code> headings before chunking, so every
+              chunk carries a real section label — "Risk Factors", "MD&amp;A" — instead of
+              a byte offset. That label shows up in the citation.</td>
+        </tr>
+        <tr>
+          <th>Chunking</th>
+          <td>LangChain <code>RecursiveCharacterTextSplitter</code>, 1400 characters with
+              200 of overlap, splitting on paragraph → line → sentence → word.</td>
+        </tr>
+        <tr>
+          <th>Embeddings</th>
+          <td><code>all-MiniLM-L6-v2</code> via sentence-transformers, run locally and
+              normalised. ~90MB, cached after first use.</td>
+        </tr>
+        <tr>
+          <th>Store</th>
+          <td>Chroma, persisted to disk. Indexing is idempotent — a filing already present
+              is skipped, keyed on its accession number.</td>
+        </tr>
+        <tr>
+          <th>Retrieval</th>
+          <td>Similarity search with relevance scores, top 8, with optional metadata
+              filters on ticker and form type.</td>
+        </tr>
+        <tr>
+          <th>Synthesis</th>
+          <td>Claude over the numbered excerpts, streamed so long answers don't stall the
+              UI. The system prompt requires a citation for every figure and forbids
+              answering beyond the excerpts.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="project-section">
+      <h2>Decisions worth defending</h2>
+      <p>
+        <strong>Filings are immutable once accepted</strong>, so extracted text is cached
+        on disk keyed by URL and never re-fetched. The cache only needs invalidating when
+        the extraction logic itself changes.
+      </p>
+      <p>
+        <strong>Embeddings stay local.</strong> Sending every chunk of every filing to an
+        embedding API would cost real money per document and make the tool useless
+        offline. A small local model is enough when the corpus is one company's filings
+        rather than the open web.
+      </p>
+      <p>
+        <strong>Retrieval failure is a first-class outcome.</strong> When nothing matches,
+        the pipeline says so and names what filing or section would hold the answer,
+        instead of letting the model improvise. If credentials are missing, retrieval
+        still runs and the matching excerpts are shown — a degraded answer beats an error
+        page.
       </p>
     </section>
 
     <section class="project-section">
-      <h2>What I learned</h2>
-      <p class="placeholder-note">
-        The part interviewers actually ask about.
+      <h2>What I'd do next</h2>
+      <p>
+        The retrieval is deliberately plain — vector similarity and nothing else. No
+        reranker, no hybrid keyword search, no query rewriting. For questions phrased
+        close to the filing's own language it works well; for oblique ones it retrieves
+        plausible-but-wrong sections, and a BM25 hybrid with a cross-encoder rerank is
+        the obvious fix.
+      </p>
+      <p>
+        Beyond that: table-aware extraction, since financial tables currently flatten into
+        text and lose their structure, and cross-filing comparison — "how did this risk
+        factor change year over year" — which needs retrieval to reason across accession
+        numbers rather than within one.
       </p>
     </section>
   </main>
@@ -81,6 +218,36 @@
     <p class="footer-copy">© 2026 Sparsh Kumar. Built with care.</p>
     <a class="footer-back" href="../index.html#projects">← Back to projects</a>
   </footer>
+
+  <script>
+    // Set this to the hosted Streamlit URL to switch the panel on.
+    // Streamlit Cloud / HF Spaces: append ?embed=true&embed_options=dark_theme
+    const DEMO_URL = "";
+
+    (function () {
+      const btn = document.getElementById("demo-btn");
+      const stage = document.getElementById("demo-stage");
+      const copy = document.getElementById("demo-copy");
+      const newtab = document.getElementById("demo-newtab");
+      if (!DEMO_URL) return;
+
+      btn.disabled = false;
+      copy.textContent =
+        "Runs live in the panel below. Free hosting sleeps when idle, so a cold start can take up to a minute.";
+      newtab.href = DEMO_URL;
+      newtab.hidden = false;
+
+      btn.addEventListener("click", function () {
+        const frame = document.createElement("iframe");
+        frame.className = "demo-frame";
+        frame.src = DEMO_URL;
+        frame.loading = "lazy";
+        frame.title = "Filings Dashboard — live demo";
+        frame.allow = "clipboard-write";
+        stage.replaceWith(frame);
+      });
+    })();
+  </script>
 
 </body>
 </html>
