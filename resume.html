@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Résumé — Sparsh Kumar</title>
+  <meta name="description" content="Sparsh Kumar's résumé — view inline or download the PDF." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="projects/project.css" />
+  <style>
+    .resume-block {
+      border: 1px solid var(--rule);
+      background: var(--bg-card);
+      margin: 2rem 0 3rem;
+    }
+
+    .resume-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .resume-bar-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .resume-bar-actions { display: flex; gap: 1.5rem; }
+
+    .resume-bar-actions a {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .resume-bar-actions a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .resume-frame-wrap {
+      aspect-ratio: 8.5 / 11;
+      max-height: 1400px;
+      background: var(--bg);
+    }
+
+    .resume-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .resume-fallback {
+      display: none;
+      padding: 4rem 1.5rem;
+      text-align: center;
+    }
+
+    .resume-fallback p {
+      color: var(--cream-muted);
+      font-size: 13px;
+      max-width: 42ch;
+      margin: 0 auto 1.5rem;
+      line-height: 1.9;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.75rem;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    /* Mobile browsers largely can't render an embedded PDF inline —
+       show the download/open card instead of a broken frame. */
+    @media (max-width: 700px) {
+      .resume-frame-wrap { display: none; }
+      .resume-fallback { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <nav>
+    <a class="nav-logo" href="index.html">SK<span>.</span></a>
+    <a class="nav-back" href="index.html#contact">← Back to site</a>
+  </nav>
+
+  <main>
+    <span class="project-number">// Résumé</span>
+    <h1 class="project-title">Sparsh <em>Kumar</em></h1>
+    <p class="project-tagline">
+      Software engineer — the full version, one PDF.
+    </p>
+
+    <div class="resume-block">
+      <div class="resume-bar">
+        <span class="resume-bar-label">// SK_Resume-E.pdf</span>
+        <div class="resume-bar-actions">
+          <a href="SK_Resume-E.pdf" target="_blank" rel="noopener">Open in new tab ↗</a>
+          <a href="SK_Resume-E.pdf" download>Download</a>
+        </div>
+      </div>
+      <div class="resume-frame-wrap">
+        <iframe src="SK_Resume-E.pdf" title="Sparsh Kumar — Résumé"></iframe>
+      </div>
+      <div class="resume-fallback">
+        <p>
+          Inline preview isn't supported on this device. Open or download the
+          PDF directly instead.
+        </p>
+        <a class="btn btn-primary" href="SK_Resume-E.pdf" download>Download PDF</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-copy">© 2026 Sparsh Kumar. Built with care.</p>
+    <a class="footer-back" href="index.html#contact">← Back to site</a>
+  </footer>
+
+</body>
+</html>
