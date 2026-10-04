@@ -376,3 +376,5 @@ footer {
 @media (max-width: 700px) {
   .demo-frame { height: 560px; }
 }
+.meta-value a { color: var(--accent); text-decoration: none; }
+.meta-value a:hover { border-bottom: 1px solid var(--accent); }
