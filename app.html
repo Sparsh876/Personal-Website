@@ -194,7 +194,8 @@ footer { border-top: 1px solid var(--rule); padding: 2rem var(--pad); display: f
 .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--rule); padding: 0.25rem 0.6rem; }
 .detail-rule { height: 1px; background: var(--rule); margin: 3rem 0; }
-.detail-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: 1.75rem 3.5rem; margin-bottom: 3rem; }
+.detail-meta .meta-value { max-width: 30ch; }
 .detail-section { margin-bottom: 3rem; }
 .detail-section h2 { font-family: var(--serif); font-size: 1.75rem; font-weight: 300; font-style: italic; margin-bottom: 1rem; }
 .detail-section p { color: var(--cream-muted); line-height: 1.9; margin-bottom: 1rem; max-width: 66ch; }
@@ -390,40 +391,42 @@ const PROJECTS = [
     name: "Filings Dashboard", cardTag: "RAG · Streamlit",
     titleHtml: 'Filings <em>Dashboard</em>',
     tagline: "Ask a 10-K a question and get an answer that cites itself.",
-    tags: ["RAG", "Python", "Streamlit", "LangChain", "Chroma", "SEC EDGAR"],
+    tags: ["RAG", "Python", "Streamlit", "LangChain", "Chroma", "Groq", "SEC EDGAR"],
     meta: [
       ["Role", "Solo — design &amp; build"],
-      ["Stack", "Python · Streamlit · LangChain · Chroma · Claude"],
+      ["Stack", "Python&nbsp;· Streamlit&nbsp;· LangChain&nbsp;· Chroma&nbsp;· Groq"],
       ["Year", "2026"],
       ["Source", '<a href="https://github.com/Sparsh876/RAG-SEC" target="_blank" rel="noopener">Sparsh876/RAG-SEC ↗</a>']
     ],
     demo: true,
     sections: [
       { h: "Overview", p: [
-        "Filings Dashboard is a research tool for public-company filings. Pick a ticker, browse its recent 10-K, 10-Q and 8-K submissions straight from SEC EDGAR, chart the reported XBRL financials, and ask plain-language questions answered only from the filing text — with every claim cited back to the exact excerpt, section, and SEC.gov URL it came from.",
-        "Retrieval runs entirely in-process. Chunking, embedding and similarity search never leave the machine; only the final answer synthesis calls an API. Indexing a 10-K costs nothing and works offline."
+        "Pick a public company, browse its 10-K, 10-Q and 8-K filings from SEC EDGAR, chart its reported financials, and ask questions answered only from the filing text — every claim cited to the exact excerpt and SEC.gov link.",
+        "Retrieval runs locally. Only the answer itself calls out, to gpt-oss-120b on Groq's free tier."
       ]},
       { h: "The problem", p: [
-        "A 10-K runs to a few hundred pages of deliberately careful language, and the sentence that matters is rarely where you'd guess. Full-text search returns every instance of a word with no sense of which one answers your question. General chatbots will answer confidently about a filing they haven't read, and there's no way to check them.",
-        "The requirement I set was narrower than \"summarise this filing\": every specific number, date, or quoted phrase in an answer has to be traceable to the excerpt it came from, and the tool has to say so plainly when the filings don't contain the answer."
+        "A 10-K is hundreds of pages, and the sentence that matters is rarely where you'd guess. Keyword search can't tell which match answers your question, and chatbots answer confidently about filings they haven't read.",
+        "The bar: every number, date or quote in an answer traces back to its excerpt — and when the filings don't have the answer, the tool says so."
       ]},
-      { h: "How it works", html: '<div class="pipeline"><pre>EDGAR JSON APIs ──▶ <span class="hl">sec/edgar.py</span>     tickers, filing history, XBRL facts (rate-limited)\n                    <span class="hl">sec/parse.py</span>     HTML → text, split on Item headings, cached to disk\n                          │\n                          ▼\n                    <span class="hl">rag/store.py</span>     LangChain splitter → local embeddings → Chroma\n                          │\n                          ▼\n                    <span class="hl">rag/pipeline.py</span>  similarity search → Claude (streamed) → cited answer\n                          │\n                          ▼\n                    <span class="hl">app.py</span>           Streamlit UI</pre></div>' },
-      { h: "The retrieval pipeline", p: ["Dense retrieval, with the structure of the document doing more work than the embedding model:"], html: '<table class="spec">' +
-        '<tr><th>Structure</th><td>Filings are split on <code>Item</code> headings before chunking, so every chunk carries a real section label — "Risk Factors", "MD&amp;A" — instead of a byte offset. That label shows up in the citation.</td></tr>' +
-        '<tr><th>Chunking</th><td>LangChain <code>RecursiveCharacterTextSplitter</code>, 1400 characters with 200 of overlap, splitting on paragraph → line → sentence → word.</td></tr>' +
-        '<tr><th>Embeddings</th><td><code>all-MiniLM-L6-v2</code> via sentence-transformers, run locally and normalised. ~90MB, cached after first use.</td></tr>' +
-        '<tr><th>Store</th><td>Chroma, persisted to disk. Indexing is idempotent — a filing already present is skipped, keyed on its accession number.</td></tr>' +
-        '<tr><th>Retrieval</th><td>Similarity search with relevance scores, top 8, with optional metadata filters on ticker and form type.</td></tr>' +
-        '<tr><th>Synthesis</th><td>Claude over the numbered excerpts, streamed so long answers don\'t stall the UI. The system prompt requires a citation for every figure and forbids answering beyond the excerpts.</td></tr>' +
+      { h: "How it works", html: '<div class="pipeline"><pre>EDGAR JSON APIs ──▶ <span class="hl">sec/edgar.py</span>     tickers, filing history, XBRL facts (rate-limited)\n                    <span class="hl">sec/parse.py</span>     HTML → text, split on Item headings, cached to disk\n                          │\n                          ▼\n                    <span class="hl">rag/store.py</span>     LangChain splitter → local embeddings → Chroma\n                          │\n                          ▼\n                    <span class="hl">rag/pipeline.py</span>  similarity search → gpt-oss on Groq (streamed) → cited answer\n                          │\n                          ▼\n                    <span class="hl">app.py</span>           Streamlit UI: Filings · Financials · Ask the filings</pre></div>' },
+      { h: "The retrieval pipeline", p: ["Plain dense retrieval — the document's structure does most of the work."], html: '<table class="spec">' +
+        '<tr><th>Parsing</th><td>HTML → text. Table rows flatten to one line, so figures stay beside their labels. Cached on disk.</td></tr>' +
+        '<tr><th>Sections</th><td>Split on <code>Item</code> headings, so every chunk — and citation — carries a label like "Item 1A — Risk Factors".</td></tr>' +
+        '<tr><th>Chunking</th><td>1,400 characters, 200 overlap (LangChain <code>RecursiveCharacterTextSplitter</code>).</td></tr>' +
+        '<tr><th>Embeddings</th><td><code>all-MiniLM-L6-v2</code>, run locally.</td></tr>' +
+        '<tr><th>Store</th><td>Chroma on disk; chunks tagged with ticker, form, date, section and URL. Re-indexing a filing is a no-op.</td></tr>' +
+        '<tr><th>Retrieval</th><td>Top 8 by similarity, filterable by ticker and form.</td></tr>' +
+        '<tr><th>Synthesis</th><td><code>gpt-oss-120b</code> on Groq, streamed. Every figure must be cited; nothing beyond the excerpts.</td></tr>' +
         '</table>' },
       { h: "Decisions worth defending", p: [
-        "<strong>Filings are immutable once accepted</strong>, so extracted text is cached on disk keyed by URL and never re-fetched. The cache only needs invalidating when the extraction logic itself changes.",
-        "<strong>Embeddings stay local.</strong> Sending every chunk of every filing to an embedding API would cost real money per document and make the tool useless offline. A small local model is enough when the corpus is one company's filings rather than the open web.",
-        "<strong>Retrieval failure is a first-class outcome.</strong> When nothing matches, the pipeline says so and names what filing or section would hold the answer, instead of letting the model improvise. If credentials are missing, retrieval still runs and the matching excerpts are shown — a degraded answer beats an error page."
+        "<strong>Cache forever.</strong> Filings never change once accepted, so each is fetched and parsed once.",
+        "<strong>Free to run.</strong> Local embeddings plus Groq's free tier — indexing costs nothing and works offline.",
+        "<strong>Periods come from the data.</strong> Quarterly and year-to-date XBRL figures share a period end; the chart separates them by the span each covers.",
+        "<strong>Fail honestly.</strong> No match, and it says so. No API key or quota left, and it still shows the matching excerpts.",
+        "<strong>Safe to leave public.</strong> SEC requests are rate-limited, and questions are capped per day and per session."
       ]},
       { h: "What I'd do next", p: [
-        "The retrieval is deliberately plain — vector similarity and nothing else. No reranker, no hybrid keyword search, no query rewriting. For questions phrased close to the filing's own language it works well; for oblique ones it retrieves plausible-but-wrong sections, and a BM25 hybrid with a cross-encoder rerank is the obvious fix.",
-        "Beyond that: table-aware extraction, since financial tables currently flatten into text and lose their structure, and cross-filing comparison — \"how did this risk factor change year over year\" — which needs retrieval to reason across accession numbers rather than within one."
+        "Hybrid BM25 search with reranking for oblique questions, table-aware extraction, and comparing a filing against last year's."
       ]}
     ]
   },

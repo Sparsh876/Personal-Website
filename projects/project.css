@@ -146,9 +146,9 @@ main {
 
 /* ─── META TABLE ─── */
 .project-meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem 3.5rem;
   margin-bottom: 3rem;
 }
 
@@ -161,7 +161,9 @@ main {
   margin-bottom: 0.5rem;
 }
 
-.meta-value { font-size: 13px; color: var(--cream); }
+.meta-value { font-size: 13px; color: var(--cream); max-width: 30ch; }
+.meta-value a { color: var(--accent); text-decoration: none; }
+.meta-value a:hover { border-bottom: 1px solid var(--accent); }
 
 /* ─── BODY SECTIONS ─── */
 .project-section { margin-bottom: 3rem; }
@@ -174,6 +176,11 @@ main {
   color: var(--cream);
   margin-bottom: 1rem;
 }
+
+.project-section strong { color: var(--cream); font-weight: 400; }
+
+.project-section code,
+.demo-foot code { font-family: var(--mono); font-size: 0.92em; color: var(--accent); }
 
 .project-section p {
   color: var(--cream-muted);
@@ -264,6 +271,8 @@ footer {
 }
 
 .demo-btn {
+  display: inline-block;
+  text-decoration: none;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.1em;
@@ -291,12 +300,51 @@ footer {
   box-shadow: none;
 }
 
-.demo-frame {
+/* Click-to-play: a thumbnail button, swapped for the YouTube iframe on click. */
+.demo-video {
+  position: relative;
   display: block;
   width: 100%;
-  height: 760px;
+  aspect-ratio: 16 / 9;
   border: 0;
-  background: var(--bg);
+  padding: 0;
+  background: #000 center / cover no-repeat;
+  cursor: pointer;
+}
+
+.demo-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.demo-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 72px; height: 72px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(11, 10, 9, 0.72);
+  border: 1px solid var(--accent);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.demo-play::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 54%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 11px 0 11px 18px;
+  border-color: transparent transparent transparent var(--accent);
+}
+
+.demo-video:hover .demo-play,
+.demo-video:focus-visible .demo-play {
+  background: var(--accent-dim);
+  box-shadow: 0 0 24px var(--accent-glow);
 }
 
 .demo-foot {
@@ -373,8 +421,3 @@ footer {
   padding: 0.25rem 0.6rem;
 }
 
-@media (max-width: 700px) {
-  .demo-frame { height: 560px; }
-}
-.meta-value a { color: var(--accent); text-decoration: none; }
-.meta-value a:hover { border-bottom: 1px solid var(--accent); }
